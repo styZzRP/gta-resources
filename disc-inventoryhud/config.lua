@@ -2,13 +2,14 @@ Config = {}
 
 Config.Locale = 'en'
 Config.OpenControl = 289
-Config.TrunkOpenControl = 47
-Config.DeleteDropsOnStart = false
+Config.TrunkOpenControl = 182
+Config.GloveOpenControl = 58
+Config.DeleteDropsOnStart = true
 Config.HotKeyCooldown = 1000
 Config.CheckLicense = true
 
 Config.Shops = {
-    ['TwentyFourSeven'] = {
+    --[[['TwentyFourSeven'] = {
         coords = {
             vector3(373.875, 325.896, 103.566),
             vector3(2557.458, 382.282, 106.622),
@@ -112,7 +113,7 @@ Config.Shops = {
         markerColour = { r = 0, g = 0, b = 255 },
         msg = '[E] Police shop',
         job = 'police'
-    },
+    },]]--
 }
 
 Config.Stash = {
@@ -124,8 +125,8 @@ Config.Stash = {
         markerColour = { r = 255, g = 255, b = 255 },
         msg = 'Open Stash ~INPUT_CONTEXT~'
     },
-    ['Mc'] = {
-        coords = vector3(457.76, -979.05, 30.69),
+    ['Police Stash'] = {
+        coords = vector3(455.76, -981.05, 30.69),
         size = vector3(1.0, 1.0, 1.0),
         job = 'police',
         markerType = 2,
@@ -135,8 +136,8 @@ Config.Stash = {
 }
 
 Config.Steal = {
-    black_money = true,
-    cash = true
+    black_money = false,
+    cash = false
 }
 
 Config.Seize = {
@@ -154,14 +155,14 @@ Config.VehicleLimit = {
 Config.VehicleSlot = {
     [0] = 10, --Compact
     [1] = 15, --Sedan
-    [2] = 20, --SUV
+    [2] = 30, --SUV
     [3] = 15, --Coupes
     [4] = 5, --Muscle
     [5] = 5, --Sports Classics
     [6] = 5, --Sports
-    [7] = 0, --Super
+    [7] = 5, --Super
     [8] = 5, --Motorcycles
-    [9] = 10, --Off-road
+    [9] = 20, --Off-road
     [10] = 20, --Industrial
     [11] = 20, --Utility
     [12] = 30, --Vans

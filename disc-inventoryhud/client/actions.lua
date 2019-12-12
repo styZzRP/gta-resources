@@ -25,6 +25,7 @@ Citizen.CreateThread(function()
         HideHudComponentThisFrame(20)
         HideHudComponentThisFrame(17)
         DisableControlAction(0, 37, true) --Disable Tab
+        EnableControlAction(0, 163, true)
         for k, v in pairs(keys) do
             if IsDisabledControlJustReleased(0, v) then
                 UseItem(k)

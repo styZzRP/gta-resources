@@ -1,15 +1,15 @@
 Locales['en'] = {
  -- Client side
-    ['used'] = "Item Used",
+    ['used'] = "Gebruikt",
     ['keyshop'] = "Press ~INPUT_CONTEXT~ to open Shop",
-    ['keystash'] = "Press ~INPUT_CONTEXT~ to open Stash",
+    ['keystash'] = "Druk ~INPUT_CONTEXT~ op de stash te openen",
 -- Server side
-    ['drop'] = "Drop",
-    ['glove'] = "Glove Box",
-    ['player'] = "Player",
-    ['shop'] = "Shop",
+    ['drop'] = "Grond",
+    ['glove'] = "Dashboard kast",
+    ['player'] = "Speler",
+    ['shop'] = "Winkel",
     ['stash'] = "Stash",
-    ['trunk'] = "Trunk-",
-    ['added'] = "Item Added",
-    ['removed'] = "Item Removed",
+    ['trunk'] = "Kofferbak-",
+    ['added'] = "Toegevoegd",
+    ['removed'] = "Verwijderd",
 } 
