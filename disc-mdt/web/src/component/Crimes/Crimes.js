@@ -49,9 +49,6 @@ export default function Civilians(props) {
   const [types, setTypes] = useState({});
   const [filter, setFilter] = useState('');
   const [filteredCrimes, setFilterCrimes] = useState([]);
-  useEffect(() => {
-    Nui.send('GetCrimes');
-  }, []);
 
   useEffect(() => {
     const types = lodash.keysIn(lodash.groupBy(filteredCrimes, (crime) => crime.type));

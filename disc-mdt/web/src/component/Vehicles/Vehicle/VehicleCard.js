@@ -1,5 +1,5 @@
 import { makeStyles, Paper, TableCell, Typography } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,10 +9,14 @@ import InfoIcon from '@material-ui/icons/Info';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '../../UI/Card/Card';
 import { red } from '@material-ui/core/colors';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
 const useStyles = makeStyles(theme => ({
   table: {
     textAlign: 'left',
+    width: '100%',
   },
   tablePaper: {
     marginTop: theme.spacing(3),
@@ -38,6 +42,16 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: red[500],
     color: red[500].getContrastText,
   },
+  activePanel: {
+    maxHeight: '30vh',
+    overflow: 'auto',
+    backgroundColor: red[500],
+    color: red[500].getContrastText,
+  },
+  panel: {
+    maxHeight: '30vh',
+    overflow: 'auto',
+  },
 }));
 
 export default function VehicleCard(props) {
@@ -54,6 +68,8 @@ export default function VehicleCard(props) {
   };
 
   const alertActive = [props.data.bolo].includes(true);
+
+  const [currentAlert, setCurrentAlert] = useState(null);
 
   return (
     <Card title={props.data.plate}>
@@ -78,16 +94,24 @@ export default function VehicleCard(props) {
         </Grid>
         <Grid item xs={6}>
           {alertActive && <Card title={'Current Active Alerts'} variant={'h6'}>
-            <Paper className={classes.tablePaper}>
-              <Table className={classes.table} size="small" aria-label="a dense table">
-                <TableBody>
-                  {props.data.bolo && <TableRow
-                    className={props.data.bolo ? classes.alert : null}><TableCell>BOLO</TableCell><TableCell><Typography
-                    variant={'body1'}
-                  >{props.data.bolo ? 'Active' : 'Inactive'}</Typography></TableCell></TableRow>}
-                </TableBody>
-              </Table>
-            </Paper>
+            <ExpansionPanel expanded={currentAlert === 'bolo'}
+                            onChange={(event, expanded) => expanded ? setCurrentAlert('bolo') : setCurrentAlert(0)}>
+              <ExpansionPanelSummary className={props.data.bolo ? classes.activePanel : classes.panel}>
+                <Typography variant={'body1'}>
+                  BOLO
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Table className={classes.table} size="small" aria-label="a dense table">
+                  <TableBody>
+                    <TableRow><TableCell>State</TableCell><TableCell><Typography variant={'body1'}
+                                                                                 className={classes.capitalize}>{props.data.bolo ? 'Active' : 'Inactive'}</Typography></TableCell></TableRow>
+                    <TableRow><TableCell>Reason</TableCell><TableCell><Typography variant={'body1'}
+                                                                                  className={classes.capitalize}>{props.data.bolo_reason}</Typography></TableCell></TableRow>
+                  </TableBody>
+                </Table>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
           </Card>}
         </Grid>
       </Grid>

@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { useSelector } from 'react-redux';
 import * as lodash from 'lodash';
 import TextField from '@material-ui/core/TextField';
-import Nui from '../../../util/Nui';
+import Nui from '../../../../util/Nui';
 
 const useStyles = makeStyles(theme => ({
   table: {
@@ -38,17 +38,16 @@ export default (props) => {
   const [crimeCategory, setCrimeCategory] = useState([]);
 
   useEffect(() => {
-    Nui.send('GetCrimes');
-  }, []);
-
-  useEffect(() => {
-    const crimesMapped = props.crimes.map(crimeId => crimes.find(crime => crime.id === crimeId)).filter(value => value !== undefined);
-    console.log(JSON.stringify(crimesMapped, null, 2));
-    setFines(lodash.sum(crimesMapped.map(crime => crime.fine)));
-    setJail(lodash.sum(crimesMapped.map(crime => crime.jailtime)));
-    setCrimeCategory(lodash.countBy(crimesMapped, (value) => value.type));
+    const crimesIds = lodash.flatten(props.crimes.map(
+      c => {
+        const arr = Array(c.count);
+        lodash.fill(arr, c.id);
+        return arr;
+      }
+    ));
+    setFines(lodash.sum(crimesIds.map(crimeId => crimes.find(crime => crime.id === crimeId).fine)));
+    setJail(lodash.sum(crimesIds.map(crimeId => crimes.find(crime => crime.id === crimeId).jailtime)));
   }, [props.crimes]);
-
 
   return (
     <Grid className={classes.root} container justify={'center'} alignItems={'center'}>

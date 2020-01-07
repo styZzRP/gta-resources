@@ -1,8 +1,10 @@
 ESX.RegisterServerCallback('disc-mdt:setBolo', function(source, cb, data)
-    print(data.bolo)
-    MySQL.Async.execute('UPDATE owned_vehicles SET bolo = @bolo WHERE plate = @plate', {
+    local player = ESX.GetPlayerFromId(source)
+    MySQL.Async.execute('UPDATE owned_vehicles SET bolo = @bolo , bolo_reason = @reason, bolo_officer=@officer WHERE plate = @plate', {
         ['@plate'] = data.plate,
-        ['@bolo'] = data.bolo
+        ['@bolo'] = data.bolo,
+        ['@reason'] = data.reason,
+        ['@officer'] = player.identifier
     }, function()
         cb(true)
         local msg = "BOLO for " .. data.plate
@@ -11,7 +13,7 @@ ESX.RegisterServerCallback('disc-mdt:setBolo', function(source, cb, data)
         else
             msg = msg .. ' Removed'
         end
-        TriggerClientEvent('disc-mdt:addNotification', -1, {
+        TriggerEvent('disc-mdt:addNotificationToJob', 'police', {
             message = msg
         })
     end)

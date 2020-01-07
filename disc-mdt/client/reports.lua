@@ -15,3 +15,15 @@ RegisterNUICallback('GetReportsForPlayer', function(data, cb)
         cb('OK')
     end, data.identifier)
 end)
+
+RegisterNUICallback("SearchReports", function(data, cb)
+    ESX.TriggerServerCallback("disc-mdt:searchReports", function(reports)
+        SendNUIMessage({
+            type = "SET_REPORTS",
+            data = {
+                reports = reports
+            }
+        })
+        cb('OK')
+    end, data.search)
+end)

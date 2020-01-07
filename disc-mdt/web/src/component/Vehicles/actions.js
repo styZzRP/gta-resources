@@ -30,10 +30,11 @@ export const setSelectedVehicle = (data) => {
   };
 };
 
-export const setBolo = (plate, set, currentSearch) => {
+export const setBolo = (plate, set, reason, currentSearch) => {
   return dispatch => Nui.send('SetBolo', {
     plate: plate,
     bolo: set,
+    reason: reason,
   }).then(_ => {
     dispatch(setSearch(currentSearch));
   });

@@ -1,7 +1,6 @@
 RegisterNUICallback("SearchVehicles", function(data, cb)
     local model = GetHashKey(data.search:upper())
     local vehicleName = GetDisplayNameFromVehicleModel(-1008861746)
-    print(vehicleName)
     ESX.TriggerServerCallback("disc-mdt:searchVehicles", function(vehicles)
         local formatVehicles = {}
         for k, v in ipairs(vehicles) do

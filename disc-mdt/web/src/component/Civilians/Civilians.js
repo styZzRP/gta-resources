@@ -11,12 +11,12 @@ import { green, red } from '@material-ui/core/colors';
 import TitleBar from '../UI/TitleBar/TitleBar';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import Report from '../Report/Report';
+import Report from '../Reports/Report/Report';
 import { getReports, searchCivilians, setCivilianImage, setSelectedCivilian } from './actions';
 import Divider from '@material-ui/core/Divider';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogModal from '../UI/Modal/DialogModal';
-import ReportDisplay from '../Report/ReportsDisplay/ReportDisplay';
+import ReportDisplay from '../Reports/Report/ReportsDisplay/ReportsDisplay';
 import Card from '../UI/Card/Card';
 import ImageModal from '../UI/ImageModal/ImageModal';
 
@@ -79,7 +79,12 @@ export default connect()((props) => {
 
   useEffect(() => {
     if (selectedCivilian !== null) {
-      props.dispatch(setSelectedCivilian(civilians.find((civ) => civ.identifier === selectedCivilian.identifier)));
+      const findCiv = civilians.find((civ) => civ.identifier === selectedCivilian.identifier)
+      if(findCiv) {
+        props.dispatch(setSelectedCivilian(findCiv));
+      } else {
+        props.dispatch(setSelectedCivilian(null));
+      }
     }
   }, [civilians]);
 
@@ -126,8 +131,8 @@ export default connect()((props) => {
           </Menu>
         </Card>
       </DialogModal>}
-      <ImageModal open={photoModalState} setModalState={setPhotoModalState} title={'Civilian Photo'}
-                  selectedImage={selectedCivilianImage} setImage={setImage}/>
+      {photoModalState && <ImageModal open={photoModalState} setModalState={setPhotoModalState} title={'Civilian Photo'}
+                  selectedImage={selectedCivilianImage} setImage={setImage}/> }
       {reportOpen && <Report open={reportOpen} setModalState={setReportState} data={selectedCivilian}/>}
     </Screen>
   );

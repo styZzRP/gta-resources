@@ -1,6 +1,5 @@
 local isDead = false
 local ShouldPlayDeathAnimation = false
-local deathCoords
 
 RegisterNetEvent('disc-death:onPlayerDeath')
 RegisterNetEvent('disc-death:onPlayerRevive')
@@ -32,7 +31,6 @@ Citizen.CreateThread(function()
         Citizen.Wait(500)
         local playerPed = PlayerPedId()
         if isDead or GetEntityHealth(playerPed) <= 0 then
-            deathCoords = GetEntityCoords(playerPed)
             ShouldPlayDeathAnimation = true
             TriggerEvent('disc-death:onPlayerDeath')
             TriggerServerEvent('disc-death:setDead', true)
@@ -61,7 +59,6 @@ Citizen.CreateThread(function()
                 Citizen.Wait(1000)
                 while isDead do
                     if not IsEntityPlayingAnim(playerPed, 'dead', 'dead_a', 3) and ShouldPlayDeathAnimation then
-                        SetEntityCoords(playerPed, deathCoords)
                         ESX.Streaming.RequestAnimDict('dead', function()
                             TaskPlayAnim(playerPed, 'dead', 'dead_a', 8.0, 8.0, -1, 33, 0, 0, 0, 0)
                         end)

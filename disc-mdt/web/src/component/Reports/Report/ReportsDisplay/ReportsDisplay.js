@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ExpansionPanelDetails, makeStyles } from '@material-ui/core';
-import Card from '../../UI/Card/Card';
+import Card from '../../../UI/Card/Card';
 import { connect } from 'react-redux';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import * as lodash from 'lodash';
@@ -21,11 +21,11 @@ export default connect()((props) => {
   const [currentReport, setCurrentReport] = useState(0);
 
   useEffect(() => {
-    console.log(JSON.stringify(props.reports, null, 2));
+    console.log(JSON.stringify(props.reports, null, 2))
   }, [props.reports]);
 
   return (
-    <Card title={'Last 5 Reports'} className={classes.panel} variant={'h6'}>
+    <Card title={'Reports'} className={classes.panel} variant={'h6'}>
       {props.reports.length > 0 ? lodash.map(props.reports, (report) =>
         <ExpansionPanel expanded={currentReport === report.id}
                         onChange={(event, expanded) => expanded ? setCurrentReport(report.id) : setCurrentReport(0)}>

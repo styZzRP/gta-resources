@@ -1,7 +1,8 @@
 import Grid from '@material-ui/core/Grid';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
+import Nui from '../../../util/Nui';
 
 const useStyles = makeStyles(theme => ({
   outsideDiv: {
@@ -52,7 +53,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function AppScreen(props) {
   const classes = useStyles();
-
   return (
     <Grid style={{ visibility: props.hidden ? 'hidden' : 'visible' }} className={classes.outsideDiv}>
       <Grid container className={classes.insideDiv} justify={'center'}>

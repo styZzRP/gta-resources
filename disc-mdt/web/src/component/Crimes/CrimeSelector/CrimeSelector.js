@@ -6,14 +6,16 @@ import { useSelector } from 'react-redux';
 import SearchBar from '../../UI/SearchBar/SearchBar';
 import List from '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import * as lodash from 'lodash';
 import Grid from '@material-ui/core/Grid';
 import { Paper } from '@material-ui/core';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Button from '@material-ui/core/Button';
+import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
+import IndeterminateCheckBoxRoundedIcon from '@material-ui/icons/IndeterminateCheckBoxRounded';
 
 const useStyles = makeStyles(theme => ({
   list: {
@@ -47,9 +49,6 @@ export default (props) => {
   const [filter, setFilter] = useState('');
   const [categories, setCategories] = useState('');
 
-  useEffect(() => {
-    Nui.send('GetCrimes');
-  }, []);
 
   useEffect(() => {
     if (filter !== '') {
@@ -76,15 +75,15 @@ export default (props) => {
                     <ListSubheader>{cat}</ListSubheader>
                     {lodash.map(filteredCrimes.filter(crime => crime.type === cat), (crime) =>
                       <Tooltip title={crime.description} placement="right-end">
-                        <ListItem button dense
-                                  onClick={() => props.handleCrime(crime.id)}>
+                        <ListItem dense>
                           <ListItemText primary={crime.name}/>
                           <ListItemSecondaryAction>
-                            <Checkbox
-                              disabled
-                              edge="end"
-                              checked={props.selectedCrimes.find(c => crime.id === c) !== undefined}
-                            />
+                            <ButtonGroup size="small" aria-label="small outlined button group" variant={'text'}>
+                              <Button
+                                onClick={() => props.removeCrime(crime.id)}><IndeterminateCheckBoxRoundedIcon/></Button>
+                              <Button>{props.selectedCrimes.find(value => value.id === crime.id)? props.selectedCrimes.find(value => value.id === crime.id).count : 0}</Button>
+                              <Button onClick={() => props.addCrime(crime.id)}><AddBoxRoundedIcon/></Button>
+                            </ButtonGroup>
                           </ListItemSecondaryAction>
                         </ListItem>
                       </Tooltip>)}

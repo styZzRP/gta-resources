@@ -10,6 +10,7 @@ import Nui from '../../../util/Nui';
 import Switch from '@material-ui/core/Switch';
 import { setDarkMode } from '../../User/actions';
 import Notifications from './Notifications/Notifications';
+import Required from '../Required/Required';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -39,10 +40,14 @@ export default withRouter(connect()(function MDTAppBar(props) {
         <Toolbar>
           <Grid container className={classes.grid}>
             <NavButton name={'Home'} link={'/'}/>
-            <NavButton name={'Civilians'} link={'/civilians'}/>
-            <NavButton name={'Vehicles'} link={'/vehicles'}/>
-            <NavButton name={'Crimes'} link={'/crimes'}/>
-            <NavButton name={'Most Wanted'} link={'/mostwanted'}/>
+            <Required jobs={['police', 'ambulance']}>
+              <NavButton name={'Civilians'} link={'/civilians'}/>
+            </Required>
+            <Required jobs={['police']}>
+              <NavButton name={'Vehicles'} link={'/vehicles'}/>
+              <NavButton name={'Crimes'} link={'/crimes'}/>
+              <NavButton name={'Reports'} link={'/reports'}/>
+            </Required>
           </Grid><Switch
           checked={darkMode}
           onChange={() => {

@@ -15,3 +15,5 @@ RegisterNUICallback("SearchCivilians", function(data, cb)
         cb('OK')
     end, data.search)
 end)
+
+

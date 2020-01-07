@@ -1,17 +1,17 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import Card from '../UI/Card/Card';
-import DialogModal from '../UI/Modal/DialogModal';
+import Card from '../../UI/Card/Card';
+import DialogModal from '../../UI/Modal/DialogModal';
 import Fab from '@material-ui/core/Fab';
 import DialogActions from '@material-ui/core/DialogActions';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import CrimeSelector from '../Crimes/CrimeSelector/CrimeSelector';
+import CrimeSelector from '../../Crimes/CrimeSelector/CrimeSelector';
 import { grey } from '@material-ui/core/colors';
 import CrimeSummary from './CrimeSummary/CrimeSummary';
-import { getLocation, getTime } from '../User/actions';
+import { getLocation, getTime } from '../../User/actions';
 import { postReport } from './actions';
 
 const useStyles = makeStyles(theme => ({
@@ -82,14 +82,39 @@ export default connect()((props) => {
     });
   };
 
-  const handleCrime = (crimeId) => {
+  const addCrime = (crimeId) => {
     setCrimes(crimes => {
       const newCrimes = [...crimes];
-      const currentIndex = newCrimes.indexOf(crimeId);
+      const currentIndex = newCrimes.indexOf(newCrimes.find(value => value.id === crimeId));
       if (currentIndex === -1) {
-        newCrimes.push(crimeId);
+        newCrimes.push({
+          id: crimeId,
+          count: 1,
+        });
       } else {
-        newCrimes.splice(currentIndex, 1);
+        newCrimes[currentIndex] = {
+          ...newCrimes[currentIndex],
+          count: newCrimes[currentIndex].count + 1,
+        };
+      }
+      return newCrimes;
+    });
+  };
+
+  const removeCrime = (crimeId) => {
+    setCrimes(crimes => {
+      const newCrimes = [...crimes];
+      const currentIndex = newCrimes.indexOf(newCrimes.find(value => value.id === crimeId));
+      if (currentIndex === -1) {
+        return crimes;
+      } else {
+        newCrimes[currentIndex] = {
+          ...newCrimes[currentIndex],
+          count: newCrimes[currentIndex].count - 1,
+        };
+        if (newCrimes[currentIndex].count <= 0) {
+          newCrimes.splice(currentIndex, 1);
+        }
       }
       return newCrimes;
     });
@@ -100,9 +125,6 @@ export default connect()((props) => {
     props.setModalState(false);
   };
 
-  const handleDateChange = (date) => {
-    console.log(date);
-  };
   return (
     <DialogModal open={props.open} setModalState={props.setModalState}>
       <Card title={'Report'}>
@@ -157,7 +179,7 @@ export default connect()((props) => {
               <Typography variant={'h6'}>Report Summary</Typography>
             </Grid>
             <Grid item xs={6}>
-              <CrimeSelector handleCrime={handleCrime}
+              <CrimeSelector addCrime={addCrime} removeCrime={removeCrime}
                              selectedCrimes={crimes}/>
             </Grid>
             <Grid item xs={6}>
@@ -173,4 +195,5 @@ export default connect()((props) => {
       </DialogActions>
     </DialogModal>
   );
-});
+})
+;

@@ -1,3 +1,7 @@
+INSERT INTO `datastore` (name, label, shared) VALUES
+  ('property','Property',0)
+;
+
 create table if not exists disc_property
 (
     id bigint unsigned auto_increment PRIMARY KEY,

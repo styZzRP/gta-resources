@@ -74,8 +74,8 @@ export default connect()((props) => {
     setVehicleImage(selectedVehicle.plate, url, currentSearch);
   };
 
-  const issueBolo = () => {
-    props.dispatch(setBolo(selectedVehicle.plate, !selectedVehicle.bolo, currentSearch));
+  const issueBolo = (reason) => {
+    props.dispatch(setBolo(selectedVehicle.plate, !selectedVehicle.bolo, reason, currentSearch));
   };
 
   useEffect(() => {

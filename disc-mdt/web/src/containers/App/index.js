@@ -10,6 +10,8 @@ import Home from '../../component/Home/Home';
 import Theme from './../../theme/Theme';
 import Vehicles from '../../component/Vehicles/Vehicles';
 import { MuiThemeProvider } from '@material-ui/core';
+import Required from '../../component/UI/Required/Required';
+import Reports from '../../component/Reports/Reports';
 
 const App = ({ hidden }) => {
   const darkMode = useSelector(state => state.user.darkMode);
@@ -19,11 +21,14 @@ const App = ({ hidden }) => {
         <AppBar/>
         <Switch>
           <Route path={'/'} exact component={Home}/>
-          <Route path={'/civilians'} exact component={Civilians}/>
-          <Route path={'/vehicles'} exact component={Vehicles}/>
-          <Route path={'/crimes'} exact component={Crimes}/>
-          <Redirect to={'/'}/>
+          <Required jobs={['police']}>
+            <Route path={'/civilians'} exact component={Civilians}/>
+            <Route path={'/vehicles'} exact component={Vehicles}/>
+            <Route path={'/crimes'} exact component={Crimes}/>
+            <Route path={'/reports'} exact component={Reports}/>
+          </Required>
         </Switch>
+        <Redirect to={'/'}/>
       </AppScreen>
     </MuiThemeProvider>
 
